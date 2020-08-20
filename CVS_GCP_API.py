@@ -68,7 +68,7 @@ def list_volumes():
 
 def getServiceLevel():
     id_token1 = get_token()
-    # Get all volumes from all regions
+    # Get service levels
     url = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Storage/ServiceLevels"
     # Construct GET request
     #url = "https://cloudvolumesgcp-api.netapp.com/v2/projects/779740114201/locations/us-central1/Storage/ServiceLevels"
@@ -91,7 +91,7 @@ def getServiceLevel():
 
 def getVolumeDetails():
     id_token1 = get_token()
-    # Get all volumes from all regions
+    # Get all volumes details
     # Construct GET request
     volumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/" + volumeIDdetails
     payload = ""
@@ -114,7 +114,7 @@ def getVolumeDetails():
 
 def updateServiceLevel():
     id_token1 = get_token()
-    # Get all volumes from all regions
+    # update the service level of the volume
     # Construct GET request
     volumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/" + volumeIDdetails
     #payload = "{\n    \"serviceLevel\": \"basic\"\n}"
