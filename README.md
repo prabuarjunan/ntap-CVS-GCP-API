@@ -8,8 +8,7 @@ project_number = 123456789                                                      
 location = "us-central1"                                                              #Enter your region here\
 volumeIDdetails = "EnteryourVolumeIDhere"                                             #Enter your volume ID here
 
-
-Change the payload var in the “updateServiceLevel” def in the python script\ 
+Change the payload variable in the “updateServiceLevel” definition in the python script\
 In def updateServiceLevel(): change the payload based on the change required.\
 payloadbasic = "{\n    \"serviceLevel\": \"basic\"\n}"\
 payloadstandard = "{\n    \"serviceLevel\": \"standard\"\n}"\
