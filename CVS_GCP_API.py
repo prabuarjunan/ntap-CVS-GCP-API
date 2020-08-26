@@ -131,7 +131,7 @@ def updateServiceLevel():
     print("Response to GET request: " + volumeURL)
 
 
-#et_token()
+#get_token()
 list_volumes()
 getServiceLevel()
 updateServiceLevel()
