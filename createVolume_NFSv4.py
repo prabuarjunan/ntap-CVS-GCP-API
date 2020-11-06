@@ -10,7 +10,7 @@ from google.oauth2 import service_account
 audience = 'https://cloudvolumesgcp-api.netapp.com'
 server = 'https://cloudvolumesgcp-api.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
-project_number = 779740114201  # Enter your project number here
+project_number = 123456789  # Enter your project number here
 location = "us-central1"
 volumeIDdetails = "Enter your Volume ID here"
 
@@ -42,7 +42,7 @@ def createVol():
     # Construct GET request
 
     createvolumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/"
-    payload = "{\n   \"name\": \"AutomatedVolume1\",\n   \"creationToken\": \"ACV1\",\n   \"region\": \"us-central1\",\n   \"serviceLevel\": \"basic\",\n   \"quotaInBytes\": 1100000000000,\n   \"kerberosEnabled\": \"false\",\n   \"network\": \"projects/779740114201/global/networks/ncv-vpc\",\n   \"protocolTypes\": [\"NFSv4\"],\n   \"exportPolicy\": {\n      \"rules\": [\n         {\n            \"access\": \"ReadWrite\",\n            \"allowedClients\": \"0.0.0.0/0\",\n            \"nfsv3\": {\n               \"checked\": false\n            },\n            \"nfsv4\": {\n               \"checked\": true\n            }\n         }\n      ]\n   }\n}"
+    payload = "{\n   \"name\": \"AutomatedVolume2\",\n   \"creationToken\": \"ACV2\",\n   \"region\": \"us-central1\",\n   \"serviceLevel\": \"basic\",\n   \"quotaInBytes\": 1100000000000,\n   \"kerberosEnabled\": \"false\",\n   \"network\": \"projects/123456789/global/networks/ncv-vpc\",\n   \"protocolTypes\": [\"NFSv4\"],\n   \"exportPolicy\": {\n      \"rules\": [\n         {\n            \"access\": \"ReadWrite\",\n            \"allowedClients\": \"0.0.0.0/0\",\n            \"nfsv3\": {\n               \"checked\": false\n            },\n            \"nfsv4\": {\n               \"checked\": true\n            }\n         }\n      ]\n   }\n}"
     headers = {
         'accept': "application/json",
         'Content-Type': "application/json",
