@@ -10,7 +10,7 @@ from google.oauth2 import service_account
 audience = 'https://cloudvolumesgcp-api.netapp.com'
 server = 'https://cloudvolumesgcp-api.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
-project_number = 123456789  # Enter your project number here
+project_number = 779740114201  # Enter your project number here
 location = "us-central1"
 volumeIDdetails = "Enter your Volume ID here"
 
@@ -49,7 +49,7 @@ def createVol():
         "serviceLevel": "basic",
         "quotaInBytes": 1100000000000,
         "kerberosEnabled": "true",
-        "network": "projects/123456789/global/networks/ncv-vpc", # Replace with your VPC instead of ncv-vpc and the project number instead of 123456789
+        "network": "projects/779740114201/global/networks/ncv-vpc", # Replace with your VPC instead of ncv-vpc and the project number instead of 123456789
         "protocolTypes": [
             "NFSv3"
         ]
