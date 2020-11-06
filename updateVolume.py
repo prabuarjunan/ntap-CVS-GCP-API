@@ -1,7 +1,6 @@
 import google.auth
 import google.auth.transport.requests
 import requests
-import json
 import time
 from google.auth import jwt
 from google.oauth2 import service_account
@@ -12,7 +11,7 @@ server = 'https://cloudvolumesgcp-api.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
 project_number = 123456789  # Enter your project number here
 location = "us-central1"
-volumeIDdetails = "Enter your volume ID here"
+volumeIDdetails = "Enter your VolumeID here"
 
 # Small utility function to convert bytes to gibibytes
 def convertToGiB(bytes):
@@ -41,7 +40,7 @@ def updateVolume():
     # Get all volumes from all regions
     # Construct GET request
 
-    createvolumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/" + volumeIDdetails
+    updatevolumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/" + volumeIDdetails
     payload = "{\n   \"name\": \"AutomatedVolume1\",\n   \"creationToken\": \"ACV1\",\n   \"region\": \"us-central1\",\n   \"serviceLevel\": \"basic\",\n   \"quotaInBytes\": 1100000000000,\n   \"kerberosEnabled\": \"false\",\n   \"network\": \"projects/123456789/global/networks/ncv-vpc\",\n   \"kerberosEnabled\": \"false\",\n   \"protocolTypes\": [\"NFSv4\"],\n   \"exportPolicy\": {\n      \"rules\": [\n         {\n            \"access\": \"ReadWrite\",\n            \"allowedClients\": \"0.0.0.0/0\",\n            \"nfsv3\": {\n               \"checked\": false\n            },\n            \"nfsv4\": {\n               \"checked\": true\n            }\n         }\n      ]\n   }\n}"
     headers = {
         'accept': "application/json",
@@ -50,7 +49,7 @@ def updateVolume():
         'cache-control': "no-cache",
     }
     # POST request to create the volume
-    response = requests.put(createvolumeURL, payload, headers=headers)
+    response = requests.put(updatevolumeURL, payload, headers=headers)
     # Sleep for 20 seconds to wait for the creation of the volume
     time.sleep(20)
     r_dict = response.json()
