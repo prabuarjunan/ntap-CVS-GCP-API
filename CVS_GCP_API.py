@@ -13,7 +13,7 @@ server = 'https://cloudvolumesgcp-api.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
 project_number = 123456789
 location = "us-central1"
-volumeIDdetails = "EnteryourVolumeIDhere"
+volumeIDdetails = "4f30e00b-87ef-28b3-6e74-72e1c1c378d3"
 payloadbasic = "{\n    \"serviceLevel\": \"basic\"\n}"
 payloadstandard = "{\n    \"serviceLevel\": \"standard\"\n}"
 payloadExtreme = "{\n    \"serviceLevel\": \"extreme\"\n}"
@@ -132,7 +132,7 @@ def updateServiceLevel():
 
 
 #get_token()
-list_volumes()
-getServiceLevel()
+#list_volumes()
+#getServiceLevel()
 updateServiceLevel()
 getVolumeDetails()

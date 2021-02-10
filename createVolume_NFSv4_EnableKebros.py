@@ -11,7 +11,7 @@ server = 'https://cloudvolumesgcp-api.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
 project_number = 123456789  # Enter your project number here
 location = "us-central1"
-volumeIDdetails = "Enter your VolumeID here"
+volumeIDdetails = "Enter your Volume ID here"
 
 # Small utility function to convert bytes to gibibytes
 def convertToGiB(bytes):
@@ -35,13 +35,13 @@ def get_token():
     #print (id_token1)
     return id_token1
 
-def updateVolume():
+def createVol():
     id_token1 = get_token()
     # Get all volumes from all regions
     # Construct GET request
 
-    updatevolumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/" + volumeIDdetails
-    payload = "{\n   \"name\": \"AutomatedVolume1\",\n   \"creationToken\": \"ACV1\",\n   \"region\": \"us-central1\",\n   \"serviceLevel\": \"basic\",\n   \"quotaInBytes\": 1100000000000,\n   \"kerberosEnabled\": \"false\",\n   \"network\": \"projects/123456789/global/networks/ncv-vpc\",\n   \"kerberosEnabled\": \"false\",\n   \"protocolTypes\": [\"NFSv4\"],\n   \"exportPolicy\": {\n      \"rules\": [\n         {\n            \"access\": \"ReadWrite\",\n            \"allowedClients\": \"0.0.0.0/0\",\n             \"hasRootAccess\": false,\n        \"nfsv3\": {\n               \"checked\": false\n            },\n            \"nfsv4\": {\n               \"checked\": true\n            }\n         }\n      ]\n   }\n}"
+    createvolumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/"
+    payload = "{\n   \"name\": \"AutomatedVolume6\",\n   \"creationToken\": \"ACV6\",\n   \"region\": \"us-central1\",\n   \"serviceLevel\": \"basic\",\n   \"quotaInBytes\": 1100000000000,\n   \"kerberosEnabled\": \"true\",\n   \"network\": \"projects/779740114201/global/networks/ncv-vpc\",\n   \"protocolTypes\": [\"NFSv4\"],\n   \"exportPolicy\": {\n      \"rules\": [\n         {\n            \"access\": \"ReadWrite\",\n            \"allowedClients\": \"0.0.0.0/0\",\n            \"hasRootAccess\": true,\n            \"nfsv3\": {\n               \"checked\": false\n            },\n            \"nfsv4\": {\n               \"checked\": true\n            },\n            \"kerberos5ReadOnly\": false,\n\t        \"kerberos5ReadWrite\": false,\n\t        \"kerberos5iReadOnly\": false,\n\t        \"kerberos5iReadWrite\": false,\n\t        \"kerberos5pReadOnly\": false,\n\t        \"kerberos5pReadWrite\": false\n         }\n      ]\n   }\n}"
     headers = {
         'accept': "application/json",
         'Content-Type': "application/json",
@@ -49,7 +49,7 @@ def updateVolume():
         'cache-control': "no-cache",
     }
     # POST request to create the volume
-    response = requests.put(updatevolumeURL, payload, headers=headers)
+    response = requests.post(createvolumeURL, payload, headers=headers)
     # Sleep for 20 seconds to wait for the creation of the volume
     time.sleep(20)
     r_dict = response.json()
@@ -67,4 +67,4 @@ def updateVolume():
     # Print the values
     print("\tvolumeID: " + volumeID + ", serviceLevel: " + serviceLevel)
 
-updateVolume()
+createVol()

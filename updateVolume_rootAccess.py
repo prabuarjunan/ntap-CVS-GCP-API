@@ -11,7 +11,7 @@ server = 'https://cloudvolumesgcp-api.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
 project_number = 123456789  # Enter your project number here
 location = "us-central1"
-volumeIDdetails = "Enter your VolumeID here"
+volumeIDdetails = "7fd1095f-617b-819a-f9ce-e3c84e31b8c9"
 
 # Small utility function to convert bytes to gibibytes
 def convertToGiB(bytes):
@@ -41,7 +41,7 @@ def updateVolume():
     # Construct GET request
 
     updatevolumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/" + volumeIDdetails
-    payload = "{\n   \"name\": \"AutomatedVolume1\",\n   \"creationToken\": \"ACV1\",\n   \"region\": \"us-central1\",\n   \"serviceLevel\": \"basic\",\n   \"quotaInBytes\": 1100000000000,\n   \"kerberosEnabled\": \"false\",\n   \"network\": \"projects/123456789/global/networks/ncv-vpc\",\n   \"kerberosEnabled\": \"false\",\n   \"protocolTypes\": [\"NFSv4\"],\n   \"exportPolicy\": {\n      \"rules\": [\n         {\n            \"access\": \"ReadWrite\",\n            \"allowedClients\": \"0.0.0.0/0\",\n             \"hasRootAccess\": false,\n        \"nfsv3\": {\n               \"checked\": false\n            },\n            \"nfsv4\": {\n               \"checked\": true\n            }\n         }\n      ]\n   }\n}"
+    payload = "{\n   \"name\": \"AutomatedVolume1\",\n   \"creationToken\": \"ACV1\",\n   \"region\": \"us-central1\",\n   \"serviceLevel\": \"standard\",\n   \"quotaInBytes\": 1100000000000,\n   \"kerberosEnabled\": \"false\",\n   \"network\": \"projects/123456789/global/networks/ncv-vpc\",\n   \"kerberosEnabled\": \"false\",\n   \"protocolTypes\": [\"NFSv4\"],\n   \"exportPolicy\": {\n      \"rules\": [\n         {\n            \"access\": \"ReadWrite\",\n            \"allowedClients\": \"0.0.0.0/0\",\n             \"hasRootAccess\": false,\n        \"nfsv3\": {\n               \"checked\": false\n            },\n            \"nfsv4\": {\n               \"checked\": true\n            }\n         }\n      ]\n   }\n}"
     headers = {
         'accept': "application/json",
         'Content-Type': "application/json",

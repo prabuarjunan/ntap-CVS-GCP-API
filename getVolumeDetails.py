@@ -10,7 +10,7 @@ server = 'https://cloudvolumesgcp-api.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
 project_number = 123456789
 location = "us-central1"
-volumeIDdetails = "EnterYourVolumeID"
+volumeIDdetails = "94b4e74f-37fd-1e9b-b8f9-541e99c6e3e2"
 
 # Small utility function to convert bytes to gibibytes
 def convertToGiB(bytes):

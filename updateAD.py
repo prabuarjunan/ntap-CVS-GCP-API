@@ -1,7 +1,6 @@
 import google.auth
 import google.auth.transport.requests
 import requests
-import json
 import time
 from google.auth import jwt
 from google.oauth2 import service_account
@@ -13,7 +12,7 @@ service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json
 project_number = 123456789  # Enter your project number here
 location = "us-central1"
 volumeIDdetails = "Enter your Volume ID here"
-
+ActiveDirectory = "4b4507f4-a71c-6b13-6866-bf46899621e3"
 # Small utility function to convert bytes to gibibytes
 def convertToGiB(bytes):
     return bytes/1024/1024/1024
@@ -36,23 +35,12 @@ def get_token():
     #print (id_token1)
     return id_token1
 
-def createVol():
+def updateAD():
     id_token1 = get_token()
     # Get all volumes from all regions
     # Construct GET request
-
-    createvolumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/"
-    payload = {
-        "name": "AutomatedVolume2",
-        "creationToken": "ACV2",
-        "region": "us-central1",
-        "serviceLevel": "basic",
-        "quotaInBytes": 1100000000000,
-        "network": "projects/779740114201/global/networks/ncv-vpc", # Replace with your VPC instead of ncv-vpc and the project number instead of 123456789
-        "protocolTypes": [
-            "NFSv3"
-        ]
-    }
+    updateADURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Storage/" + "/ActiveDirectory/" + ActiveDirectory
+    payload = "{\n    \"username\": \"admin-prabu@cloudheroes.dom\",\n    \"password\": \"Netapp123..!\",\n    \"domain\": \"cloudheroes.dom\",\n    \"DNS\": \"10.3.1.15\",\n    \"netBIOS\": \"cloudier\",\n    \"organizationalUnit\": \"CN=Computers\",\n    \"site\": \"Default-First-Site-Name\",\n    \"kdcIP\": \"10.3.1.15\",\n    \"adName\": \"2BOVAEKB44B\",\n    \"ldapSigning\": false,\n    \"securityOperators\": [\n        \"test\"\n    ],\n    \"backupOperators\": [\n        \"backupOperators1\",\n        \"backupOperators2\"\n    ]\n}"
     headers = {
         'accept': "application/json",
         'Content-Type': "application/json",
@@ -60,22 +48,24 @@ def createVol():
         'cache-control': "no-cache",
     }
     # POST request to create the volume
-    response = requests.post(createvolumeURL, json.dumps(payload), headers=headers)
+    response = requests.put(updateADURL, payload, headers=headers)
     # Sleep for 20 seconds to wait for the creation of the volume
     time.sleep(20)
     r_dict = response.json()
-    # print("Response to POST request: " + response.text)
-    # Get volume attributes
-    # To get the values from the dictionary, you have read the dictionary one by one.
-    # fetch the response first
-    fetchvalue = (r_dict.get('response'))
-    # fetch all the values from the response
-    fetchvolumeID = fetchvalue.get('AnyValue')
-    # fetch the volume ID from the values
-    volumeID = fetchvolumeID.get('volumeId')
-    # fetch the service level from the values
-    serviceLevel = fetchvolumeID.get('serviceLevel')
+    # Get AD attributes
+    # fetch the DNS details
+    DNSServer = (r_dict.get('DNS'))
+    # fetch the KPC IP address
+    kdcIP = (r_dict.get('kdcIP'))
+    # fetch the Domain Name
+    domain = (r_dict.get('domain'))
+    # fetch the KPC IP address
+    UUID = (r_dict.get('UUID'))
     # Print the values
-    print("\tvolumeID: " + volumeID + ", serviceLevel: " + serviceLevel)
+    print("\tDNSServer: " + DNSServer + ", domain: " + domain + ", kdcIP: " + kdcIP + ", UUID: " + UUID)
+    backupOperators = (r_dict.get('backupOperators'))
+    for backupOperatorsName in backupOperators:
+        # get updated backup operators
+        print(backupOperatorsName)
 
-createVol()
+updateAD()
