@@ -10,8 +10,8 @@ from google.oauth2 import service_account
 audience = 'https://cloudvolumesgcp-api.netapp.com'
 server = 'https://cloudvolumesgcp-api.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
-project_number = 123456789  # Enter your project number here
-location = "us-central1"
+project_number = 779740114201  # Enter your project number here
+location = "us-east4"
 volumeIDdetails = "Enter your Volume ID here"
 
 # Small utility function to convert bytes to gibibytes
@@ -43,11 +43,12 @@ def createVol():
 
     createvolumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/"
     payload = {
-        "name": "AutomatedVolume2",
-        "creationToken": "ACV2",
-        "region": "us-central1",
+        "name": "AutomatedVolume34",
+        "creationToken": "ACV4",
+        "region": "us-east4",
         "serviceLevel": "basic",
         "quotaInBytes": 1100000000000,
+        "storageClass": "hardware",
         "network": "projects/779740114201/global/networks/ncv-vpc", # Replace with your VPC instead of ncv-vpc and the project number instead of 123456789
         "protocolTypes": [
             "NFSv3"
@@ -63,6 +64,7 @@ def createVol():
     response = requests.post(createvolumeURL, json.dumps(payload), headers=headers)
     # Sleep for 20 seconds to wait for the creation of the volume
     time.sleep(20)
+    print(response)
     r_dict = response.json()
     # print("Response to POST request: " + response.text)
     # Get volume attributes

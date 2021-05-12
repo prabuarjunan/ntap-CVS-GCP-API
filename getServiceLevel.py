@@ -42,7 +42,7 @@ def getServiceLevel():
     payload = ""
     headers = {
         'Content-Type': "application/json",
-        'Authorization': "Bearer " + id_token1.decode('utf-8'),
+            'Authorization': "Bearer " + id_token1.decode('utf-8'),
         'cache-control': "no-cache",
     }
     response = requests.request("GET", url, data=payload, headers=headers)

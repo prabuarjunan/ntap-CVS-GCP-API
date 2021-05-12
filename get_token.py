@@ -7,7 +7,7 @@ from google.oauth2 import service_account
 audience = 'https://cloudvolumesgcp-api.netapp.com'
 server = 'https://cloudvolumesgcp-api.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
-project_number = 123456789 # staging 779740114201
+project_number = 779740114201 # staging 779740114201
 
 # Small utility function to convert bytes to gibibytes
 def convertToGiB(bytes):
@@ -30,6 +30,5 @@ def get_token():
     id_token1 = jwt_creds.token
     print("Token:", id_token1)
     return id_token1
-
 
 get_token()

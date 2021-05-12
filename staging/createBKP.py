@@ -7,13 +7,14 @@ from google.auth import jwt
 from google.oauth2 import service_account
 
 # Set common variables
-audience = 'https://cloudvolumesgcp-api.netapp.com'
-server = 'https://cloudvolumesgcp-api.netapp.com'
-# Enter your service account file below
+#audience = 'https://cloudvolumesgcp-api.netapp.com'
+stagingaudience = 'https://dev-cloudvolumesgcp-api.netapp.com'
+#server = 'https://cloudvolumesgcp-api.netapp.com'
+stagingserver = 'https://stage.ncv.us-east4.gcp.netapp.com'
 service_account_file = '/Users/arjunan/Downloads/ncv-beta-demo-eccee8711557.json'
-project_number = 123456789  # Enter your project number here
+project_number = 810011675233
 location = "us-east1"
-volumeIDdetails = "Enter your Volume ID here"
+volumeIDdetails = "3b908b82-16ec-d32a-04fc-c95fb9ffb858"
 
 # Small utility function to convert bytes to gibibytes
 def convertToGiB(bytes):
@@ -26,7 +27,7 @@ def get_token():
 
     # Create jwt
     jwt_creds = jwt.Credentials.from_signing_credentials(
-        svc_creds, audience=audience)
+        svc_creds, audience=stagingaudience)
 
     # Issue request to get auth token
     request = google.auth.transport.requests.Request()
@@ -34,32 +35,21 @@ def get_token():
 
     # Extract token
     id_token1 = jwt_creds.token
-    #print (id_token1)
+    print("Token:", id_token1)
     return id_token1
 
-def createVol():
+
+def bkpVol():
     id_token1 = get_token()
     # Get all volumes from all regions
     # Construct GET request
 
-    createvolumeURL = server + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/"
+    createBKP = stagingserver + "/v2/projects/" + str(project_number) + "/locations/" + location + "/Volumes/" + volumeID + "/Backups"
     payload = {
-        "name": "AutomatedVolume3",
-        "creationToken": "ACV3",
         "region": "us-east1",
-        "zone": "us-east1-b",
         "serviceLevel": "basic",
-        "quotaInBytes": 1099511627776,
-        "usedBytes": 78606279278,
-        "snapshotPolicy": {
-            "dailySchedule": {
-                "hour": 1,
-                "minute": 10,
-                "snapshotsToKeep": 5
-            }
-        },
-        "storageClass": "software",
-        "network": "projects/123456789/global/networks/ncv-vpc", # Replace with your VPC instead of ncv-vpc and the project number instead of 123456789
+        "quotaInBytes": 1100000000000,
+        "network": "projects/779740114201/global/networks/cvs-staging", # Replace with your VPC instead of ncv-vpc and the project number instead of 123456789
         "protocolTypes": [
             "NFSv3"
         ]
@@ -74,7 +64,6 @@ def createVol():
     response = requests.post(createvolumeURL, json.dumps(payload), headers=headers)
     # Sleep for 20 seconds to wait for the creation of the volume
     time.sleep(20)
-    print(response)
     r_dict = response.json()
     # print("Response to POST request: " + response.text)
     # Get volume attributes
@@ -90,4 +79,5 @@ def createVol():
     # Print the values
     print("\tvolumeID: " + volumeID + ", serviceLevel: " + serviceLevel)
 
-createVol()
+
+bkpVol()
