@@ -1,3 +1,5 @@
+# Note: Enter the volume size in exact multiples of 1GiB (1024^3).
+# In the below example, the volume size specified for “quotaInBytes”is 1099511627776, which is 1024 GiB.
 import google.auth
 import google.auth.transport.requests
 import requests
